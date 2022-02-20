@@ -2,7 +2,7 @@
 SHELL := /bin/bash
 
 
-# folders
+# directories
 DATA=data
 ENV=.env
 SRC=src
@@ -11,7 +11,6 @@ TESTS=tests
 TEST_DATA=${TESTS}/data
 
 TEMPLATE_KEYWORD=template
-PROJECT_NAME=new_project
 PROJECT_SRC=${SRC}/${PROJECT_NAME}
 PROJECT_TEST=${TESTS}/${PROJECT_NAME}
 PROJECT_TEST_FEATURES=${PROJECT_TEST}/features
@@ -28,36 +27,39 @@ REMOVE_PYCACHE_CMD=python3 -Bc "import pathlib; [p.rmdir() for p in pathlib.Path
 ANALYZE_CMD=python3 -m flake8
 TEST_CMD=python3 -m behave
 
-.PHONY: rename init rename-github rename-vscode rename-src rename-tests rename-makefile rename analyze tests clean
+
+.PHONY: rename init rename analyze tests clean
 
 
 ###############################
 # renaming automation targets #
 ###############################
 
-rename-github:
+rename:
+# rename within github action
 	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' .github/workflows/${TEMPLATE_KEYWORD}.yml
 	mv .github/workflows/${TEMPLATE_KEYWORD}.yml .github/workflows/${PROJECT_NAME}.yml
 
-rename-vscode:
+# rename with .vscode files
 	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' .vscode/launch.json
 	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' .vscode/settings.json
 
-rename-src:
+# rename source code directory
 	mv ${SRC}/${TEMPLATE_KEYWORD} ${SRC}/${PROJECT_NAME}
 
-rename-tests:
+# rename within feature and step files
 	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' ${TESTS}/${TEMPLATE_KEYWORD}/features/${TEMPLATE_KEYWORD}.feature
 	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' ${TESTS}/${TEMPLATE_KEYWORD}/features/steps/${TEMPLATE_KEYWORD}.py
 
+# rename test directories and files
 	mv ${TESTS}/${TEMPLATE_KEYWORD}/features/${TEMPLATE_KEYWORD}.feature ${TESTS}/${TEMPLATE_KEYWORD}/features/${PROJECT_NAME}.feature
 	mv ${TESTS}/${TEMPLATE_KEYWORD}/features/steps/${TEMPLATE_KEYWORD}.py ${TESTS}/${TEMPLATE_KEYWORD}/features/steps/${PROJECT_NAME}.py
 	mv ${TESTS}/${TEMPLATE_KEYWORD} ${TESTS}/${PROJECT_NAME}
 
-rename-makefile:
+# rename the template keyword so rename target works more than once
 	sed -i 's/TEMPLATE_KEYWORD=${TEMPLATE_KEYWORD}/TEMPLATE_KEYWORD=${PROJECT_NAME}/g' Makefile
 
-rename: rename-github rename-vscode rename-src rename-tests rename-makefile
+# some positive feedback
 	echo Renamed from ${TEMPLATE_KEYWORD} to ${PROJECT_NAME}
 
 
