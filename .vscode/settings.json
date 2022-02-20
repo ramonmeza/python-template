@@ -1,0 +1,16 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/__pycache__": true,
+        "**/.env": true
+    },
+    "cucumberautocomplete.steps": [
+        "tests/project/features/steps/*.py"
+    ],
+    "cucumberautocomplete.strictGherkinCompletion": true
+}

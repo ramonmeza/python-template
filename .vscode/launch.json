@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Project",
+            "type": "python",
+            "request": "launch",
+            "program": "src/project/app.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Run Project Tests",
+            "type": "python",
+            "request": "launch",
+            "module": "behave",
+            "args": [
+                "tests/project/features"
+            ]
+        }
+    ]
+}
