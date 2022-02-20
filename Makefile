@@ -28,20 +28,16 @@ REMOVE_PYCACHE_CMD=python3 -Bc "import pathlib; [p.rmdir() for p in pathlib.Path
 ANALYZE_CMD=python3 -m flake8
 TEST_CMD=python3 -m behave
 
+.PHONY: rename init rename-github rename-vscode rename-src rename-tests rename-makefile rename analyze tests clean
 
-# targets
-.PHONY: rename init rename-github rename-vscode rename-src rename-tests rename update-template-keyword analyze tests clean
 
-init:
-	${CREATE_ENV_CMD}
-	( \
-		${ACTIVATE_ENV_CMD}; \
-		${INSTALL_DEPS_CMD}; \
-	)
+###############################
+# renaming automation targets #
+###############################
 
 rename-github:
 	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' .github/workflows/${TEMPLATE_KEYWORD}.yml
-	mv .github/workflows/project.yml .github/workflows/${PROJECT_NAME}.yml
+	mv .github/workflows/${TEMPLATE_KEYWORD}.yml .github/workflows/${PROJECT_NAME}.yml
 
 rename-vscode:
 	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' .vscode/launch.json
@@ -58,11 +54,23 @@ rename-tests:
 	mv ${TESTS}/${TEMPLATE_KEYWORD}/features/steps/${TEMPLATE_KEYWORD}.py ${TESTS}/${TEMPLATE_KEYWORD}/features/steps/${PROJECT_NAME}.py
 	mv ${TESTS}/${TEMPLATE_KEYWORD} ${TESTS}/${PROJECT_NAME}
 
-rename: rename-github rename-vscode rename-src rename-tests
+rename-makefile:
+	sed -i 's/TEMPLATE_KEYWORD=${TEMPLATE_KEYWORD}/TEMPLATE_KEYWORD=${PROJECT_NAME}/g' Makefile
+
+rename: rename-github rename-vscode rename-src rename-tests rename-makefile
 	echo Renamed from ${TEMPLATE_KEYWORD} to ${PROJECT_NAME}
 
-update-template-keyword:
-	sed -i 's/TEMPLATE_KEYWORD=${TEMPLATE_KEYWORD}/TEMPLATE_KEYWORD=${PROJECT_NAME}/g' Makefile
+
+##################
+# public targets #
+##################
+
+init:
+	${CREATE_ENV_CMD}
+	( \
+		${ACTIVATE_ENV_CMD}; \
+		${INSTALL_DEPS_CMD}; \
+	)
 
 analyze:
 	( \
