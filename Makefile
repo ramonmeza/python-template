@@ -35,6 +35,10 @@ TEST_CMD=python3 -m behave
 ###############################
 
 rename:
+
+# rename the project name in this Makefile
+	sed -i 's/PROJECT_NAME==.*/PROJECT_NAME=${PROJECT_NAME}/g' Makefile
+
 # rename within github action
 	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' .github/workflows/${TEMPLATE_KEYWORD}.yml
 	mv .github/workflows/${TEMPLATE_KEYWORD}.yml .github/workflows/${PROJECT_NAME}.yml
@@ -57,7 +61,6 @@ rename:
 
 # rename the template keyword so rename target works more than once
 	sed -i 's/TEMPLATE_KEYWORD=${TEMPLATE_KEYWORD}/TEMPLATE_KEYWORD=${PROJECT_NAME}/g' Makefile
-	sed -i 's/PROJECT_NAME==.*/PROJECT_NAME=${PROJECT_NAME}/g' Makefile
 
 # some positive feedback
 	echo Renamed from ${TEMPLATE_KEYWORD} to ${PROJECT_NAME}
