@@ -2,19 +2,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run Project",
+            "name": "Run template",
             "type": "python",
             "request": "launch",
-            "program": "src/project/app.py",
+            "program": "src/template/app.py",
             "console": "integratedTerminal"
         },
         {
-            "name": "Run Project Tests",
+            "name": "Run template Tests",
             "type": "python",
             "request": "launch",
             "module": "behave",
             "args": [
-                "tests/project/features"
+                "tests/template/features"
             ]
         }
     ]

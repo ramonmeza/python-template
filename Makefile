@@ -10,7 +10,8 @@ TESTS=tests
 
 TEST_DATA=${TESTS}/data
 
-PROJECT_NAME=project
+TEMPLATE_KEYWORD=template
+#PROJECT_NAME=your_project_name
 PROJECT_SRC=${SRC}/${PROJECT_NAME}
 PROJECT_TEST=${TESTS}/${PROJECT_NAME}
 PROJECT_TEST_FEATURES=${PROJECT_TEST}/features
@@ -29,7 +30,7 @@ TEST_CMD=python3 -m behave
 
 
 # targets
-.PHONY: init analyze tests clean
+.PHONY: rename init rename-github rename-vscode rename-src rename-tests rename update-template-keyword analyze tests clean
 
 init:
 	${CREATE_ENV_CMD}
@@ -37,6 +38,31 @@ init:
 		${ACTIVATE_ENV_CMD}; \
 		${INSTALL_DEPS_CMD}; \
 	)
+
+rename-github:
+	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' .github/workflows/${TEMPLATE_KEYWORD}.yml
+	mv .github/workflows/project.yml .github/workflows/${PROJECT_NAME}.yml
+
+rename-vscode:
+	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' .vscode/launch.json
+	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' .vscode/settings.json
+
+rename-src:
+	mv ${SRC}/${TEMPLATE_KEYWORD} ${SRC}/${PROJECT_NAME}
+
+rename-tests:
+	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' ${TESTS}/${TEMPLATE_KEYWORD}/features/${TEMPLATE_KEYWORD}.feature
+	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' ${TESTS}/${TEMPLATE_KEYWORD}/features/steps/${TEMPLATE_KEYWORD}.py
+
+	mv ${TESTS}/${TEMPLATE_KEYWORD}/features/${TEMPLATE_KEYWORD}.feature ${TESTS}/${TEMPLATE_KEYWORD}/features/${PROJECT_NAME}.feature
+	mv ${TESTS}/${TEMPLATE_KEYWORD}/features/steps/${TEMPLATE_KEYWORD}.py ${TESTS}/${TEMPLATE_KEYWORD}/features/steps/${PROJECT_NAME}.py
+	mv ${TESTS}/${TEMPLATE_KEYWORD} ${TESTS}/${PROJECT_NAME}
+
+rename: rename-github rename-vscode rename-src rename-tests
+	echo Renamed from ${TEMPLATE_KEYWORD} to ${PROJECT_NAME}
+
+update-template-keyword:
+	sed -i 's/TEMPLATE_KEYWORD=${TEMPLATE_KEYWORD}/TEMPLATE_KEYWORD=${PROJECT_NAME}/g' Makefile
 
 analyze:
 	( \

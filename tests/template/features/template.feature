@@ -1,4 +1,4 @@
-Feature: Project
+Feature: template
 
     This is just a template feature file. It doesn't do anything and you should
     definitely change it. Tests are good.
