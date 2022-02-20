@@ -8,12 +8,11 @@ ENV=.env
 SRC=src
 TESTS=tests
 
-TEST_DATA:=${TESTS}/data
+TEST_DATA=${TESTS}/data
 
-TEMPLATE_KEYWORD:=template
-PROJECT_SRC:=${SRC}/${PROJECT_NAME}
-PROJECT_TEST:=${TESTS}/${PROJECT_NAME}
-PROJECT_TEST_FEATURES:=${PROJECT_TEST}/features
+TEMPLATE_KEYWORD=template
+PROJECT_NAME=nothing
+PROJECT_TEST_FEATURES=${TESTS}/${PROJECT_NAME}/features
 
 
 # commands
@@ -58,6 +57,7 @@ rename:
 
 # rename the template keyword so rename target works more than once
 	sed -i 's/TEMPLATE_KEYWORD=${TEMPLATE_KEYWORD}/TEMPLATE_KEYWORD=${PROJECT_NAME}/g' Makefile
+	sed -i 's/PROJECT_NAME==.*/PROJECT_NAME=${PROJECT_NAME}/g' Makefile
 
 # some positive feedback
 	echo Renamed from ${TEMPLATE_KEYWORD} to ${PROJECT_NAME}
