@@ -3,6 +3,14 @@
 A template for creating Python projects. Incorporates Github Actions to analyze code with [Flake8](https://github.com/PyCQA/flake8) and to run tests with [behave](https://github.com/behave/behave).
 
 
+## Prerequisites
+
+* `make`
+* `Python 3.10`
+* `venv` from `pip`
+* uh...
+* that's it, just make and python, then just run the make commands, oops. spoilers. anyways tl;dr.
+
 ## Usage
 
 Follow these steps after pressing the "Use this template" button from [Github](https://github.com/ramonmeza/python-template) and cloning the repository locally.
