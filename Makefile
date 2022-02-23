@@ -38,7 +38,7 @@ TEST_CMD=python3 -m behave
 rename:
 
 # rename the project name in this Makefile
-	sed -i 's/PROJECT_NAME=.*/PROJECT_NAME=${PROJECT_NAME}/g' Makefile
+	sed -i 's/PROJECT_NAME=${TEMPLATE_KEYWORD}/PROJECT_NAME=${PROJECT_NAME}/g' Makefile
 
 # rename within github action
 	sed -i 's/${TEMPLATE_KEYWORD}/${PROJECT_NAME}/g' .github/workflows/${TEMPLATE_KEYWORD}.yml
