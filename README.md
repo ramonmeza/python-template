@@ -34,9 +34,18 @@ make init
 ```
 
 
+### Linting the code with Flake8
+
+It's as simple as running the `lint` target. This will use [Flake8](https://github.com/PyCQA/flake8) to analyze the `src` and `tests` directories.
+
+```sh
+make lint
+```
+
+
 ### Analyzing the code with Flake8
 
-It's as simple as running the `analyze` target. This will use [Flake8](https://github.com/PyCQA/flake8) to analyze the `src` and `tests` directories.
+Run the `analyze` target. This will use [mypy](https://github.com/python/mypy) to analyze the `src` and `tests` directories.
 
 ```sh
 make analyze
@@ -48,7 +57,7 @@ make analyze
 Use the `tests` target to run the [behave](https://github.com/behave/behave) tests. This will automatically pass the project's `features` into `behave` to test. The only tests ran explicitly with this template are located at `tests/<your_project_name>/features`
 
 ```sh
-make analyze
+make tests
 ```
 
 
