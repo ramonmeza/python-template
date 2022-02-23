@@ -23,8 +23,8 @@ INSTALL_DEPS_CMD=pip3 install -r requirements.txt
 REMOVE_PY_OBJS_CMD=python3 -Bc "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.py[co]')]"
 REMOVE_PYCACHE_CMD=python3 -Bc "import pathlib; [p.rmdir() for p in pathlib.Path('.').rglob('__pycache__')]"
 
-ANALYZE_CMD=python3 -m flake8
-LINT_CMD=python3 -m mypy
+ANALYZE_CMD=python3 -m mypy
+LINT_CMD=python3 -m flake8
 TEST_CMD=python3 -m behave
 
 
