@@ -11,7 +11,7 @@ TESTS=tests
 TEST_DATA=${TESTS}/data
 
 TEMPLATE_KEYWORD=template
-PROJECT_NAME=nothing
+PROJECT_NAME=not_set
 PROJECT_TEST_FEATURES=${TESTS}/${PROJECT_NAME}/features
 
 
@@ -24,6 +24,7 @@ REMOVE_PY_OBJS_CMD=python3 -Bc "import pathlib; [p.unlink() for p in pathlib.Pat
 REMOVE_PYCACHE_CMD=python3 -Bc "import pathlib; [p.rmdir() for p in pathlib.Path('.').rglob('__pycache__')]"
 
 ANALYZE_CMD=python3 -m flake8
+LINT_CMD=python3 -m mypy
 TEST_CMD=python3 -m behave
 
 
@@ -77,6 +78,13 @@ init:
 		${INSTALL_DEPS_CMD}; \
 	)
 
+lint:
+	( \
+		${ACTIVATE_ENV_CMD}; \
+		${LINT_CMD} ${SRC}; \
+		${LINT_CMD} ${TESTS}; \
+	)
+
 analyze:
 	( \
 		${ACTIVATE_ENV_CMD}; \
@@ -92,5 +100,6 @@ tests:
 
 clean:
 	rm -rf ${ENV}
+	rm -rf .mypy_cache
 	${REMOVE_PY_OBJS_CMD}
 	${REMOVE_PYCACHE_CMD}

@@ -21,6 +21,9 @@ jobs:
       - name: Install pip Dependencies
         run: make init
       
+      - name: Lint Code
+        run: make lint
+      
       - name: Analyze Code
         run: make analyze
       
